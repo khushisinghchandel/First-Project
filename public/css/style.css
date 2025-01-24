@@ -1,0 +1,157 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(9, 8, 8) !important;
+    
+}
+
+.container{
+    flex:1;
+}
+
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass {
+    color: #000000;
+    font-size: 2rem;
+}
+
+.nav{
+    color: #222222 !important;
+    }
+
+.f-info-links a{
+        text-decoration: none;
+        color:#222222;
+    }
+
+.f-info-links a:hover {
+        text-decoration: underline;
+    }
+    
+.f-info-links, .f-info-socials, .f-info-brand {
+        width:100%;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+        
+    .f-info-socials i {
+        font-size: 1.2rem;
+        margin-right: 1rem;
+        transition: transform 0.3s ease; /* Smooth transition for the scaling effect */
+    }
+    
+    .f-info-socials i:hover {
+        transform: scale(1.2); /* Scale the icon to 120% of its original size on hover */
+    }
+    
+.f-info{
+        text-align: center;
+        height: 8rem;
+        background-color: #b0a7a7;
+        opacity: 0.6;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        align-items:space-evenly;
+        margin-top: 4rem;
+    }
+
+     /*Cards*/ 
+/* Card default styles */
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    background-color: rgb(253, 217, 173) !important; 
+    opacity: 0.9;
+    transition: transform 0.3s ease, opacity 0.3s ease;  
+  }
+
+  .listing-card:hover {
+    opacity: 0.5; /* Reduce opacity */
+    transform: scale(1.1); /* Increase card size */
+  }
+  
+
+.card-img{
+    border-radius: 1rem !important;
+    width: 100%;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 500 !important;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+ /*card effect*/
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}*/
+
+.add-btn{
+    background-color: #b3b0b0 !important;
+}
+
+.edit-btn {
+    margin-right: 1rem;
+}
+
+
+
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#editimg {
+height: 4px;
+width: 4px;
+}
+
+#map {
+    height: 600px;
+    width : 80vh;
+    border-radius: 10px;
+    margin-top: 1rem
+}
+@media (max-width: 768px) {
+    #map {
+      height: 350px; /* Reduce height for tablets and smaller screens */
+      width: 90%
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #map {
+      height: 250px; /* Further reduce height for mobile screens */
+      width: 90%
+    }
+  }
+

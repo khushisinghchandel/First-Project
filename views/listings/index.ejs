@@ -1,0 +1,135 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-image: url('/images/background.jpeg');  /* Set your image here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(19, 14, 14);
+    height: 100vh;  /* Ensure it covers the entire height of the viewport */
+    margin: 0;
+    background-attachment: fixed
+  }
+
+  /* Optional overlay to achieve the opacity effect */
+
+  body::before {
+  /* Add a dark, transparent overlay on top of the image */
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark black with 50% opacity */
+  z-index: -1; /* Ensure the overlay is below text but above the image */
+  filter: blur(8px); /* Apply blur to the background image */
+}
+
+  .row {
+    margin: 0;
+  }
+
+  /*.listing-card {
+    margin: 1rem 0.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: bisque;
+    
+  }
+
+
+  .card-img-top {
+    border-radius: 15px 15px 0 0;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }*/
+
+
+.listing-card {
+  margin: 1rem 0.5rem;
+  border: none;
+  border-radius: 15px;
+  background-color: bisque;
+  height: 400px; /* Fixed height for all cards */
+  display: flex;
+  flex-direction: column; /* Ensure content aligns within the card */
+  overflow: hidden; /* Prevent content from overflowing the card */
+}
+
+/* Make sure the card image and body fit correctly within the fixed height */
+.card-img-top {
+  border-radius: 15px 15px 0 0;
+  height: 300px; /* Fixed height for the image */
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+  flex: 1; /* Ensures body takes remaining space */
+  overflow-y: auto; /* Add scrollbar if content exceeds the space */
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.rentnest {
+  font-size: 3rem;
+  color: antiquewhite;
+  opacity: 0;
+  animation: fadeIn 3s ease-in-out forwards;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start completely transparent */
+  }
+  to {
+    opacity: 1; /* End with full opacity */
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+
+  
+    <div class="container-fluid justify-content-center">
+      <h2 class="rentnest">Discover  Your  Rental  Home !</h2>
+    </div>
+  
+  
+
+<div class="container-fluid mt-3">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+    <% for(let listing of allListings) { %>
+      <div class="col">
+        <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+          <div class="card listing-card">
+            <img src="<%= listing.images[0]?.url %>" class="card-img-top" alt="Image">
+
+            <div class="card-body">
+              <b>
+                <h4 class="card-title">
+                  <%= listing.numBHK %> BHK <%= listing.propertyType %>
+                </h4>
+              </b>
+              <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %> /- month</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% } %>
+  </div>
+</div>
+</body>

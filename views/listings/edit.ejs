@@ -1,0 +1,86 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    
+    body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-image: url('/images/background.jpeg');  /* Set your image here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(19, 14, 14);
+    height: 100vh;  /* Ensure it covers the entire height of the viewport */
+    margin: 0;
+    background-attachment: fixed
+    }
+
+    body::before {
+  /* Add a dark, transparent overlay on top of the image */
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark black with 50% opacity */
+  z-index: -1; /* Ensure the overlay is below text but above the image */
+  filter: blur(8px); /* Apply blur to the background image */
+}
+
+.edit{
+    color:antiquewhite;
+}
+
+</style>
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+    <h1 class="edit">Edit your Listing</h1>
+    <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="propertyType" class="form-label edit">Property Type</label>
+            <select name="listing[propertyType]" class="form-control" required>
+              <option value="Room" <%= listing.propertyType === 'Room' ? 'selected' : '' %>>Room</option>
+              <option value="Flat" <%= listing.propertyType === 'Flat' ? 'selected' : '' %>>Flat</option>
+              <option value="Apartment" <%= listing.propertyType === 'Apartment' ? 'selected' : '' %>>Apartment</option>
+            </select>
+
+            <div class="invalid-feedback">Select Property Type!</div>
+          </div>
+  
+          <!-- Add BHK Field -->
+          <div class="mb-3">
+            <label for="numBHK" class="form-label edit">Number of BHK</label>
+            <input name="listing[numBHK]" value="<%=listing.numBHK%>" type="number" min="1" class="form-control" required />
+            <div class="invalid-feedback">Please Enter BHK!</div>
+          </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label edit">Description</label>
+            <textarea name="listing[description]" class="form-control" required><%=listing.description%></textarea>
+
+        <div class="invalid-feedback">Please enter a short description!</div>
+        </div>
+
+        
+        <div class="row">
+            <div class="mb-3 col-4">
+                <label for="price" class="form-label edit">Price</label>
+            <input name="listing[price]" value="<%=listing.price%>" type="number" class="form-control" required/>
+            <div class="invalid-feedback">Enter Price</div>
+            </div>
+            <div class="mb-3 col-md-8">
+                <label for="country" class="form-label edit">Country</label>
+            <input name="listing[country]" value="<%=listing.country%>" type="text" class="form-control" required/>
+            <div class="invalid-feedback">Enter a Country name</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="location" class="form-label edit">Location</label>
+        <input name="listing[location]" value="<%=listing.location%>" type="text" class="form-control" required/>
+        <div class="invalid-feedback">Enter Location</div>
+        </div>
+        <button class="btn btn-secondary" style="color: black;">Edit</button>
+    </div>
+</div>
+</body>

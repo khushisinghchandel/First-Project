@@ -1,0 +1,64 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-image: url('/images/background.jpeg');  /* Set your image here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(19, 14, 14);
+    height: 100vh;  /* Ensure it covers the entire height of the viewport */
+    margin: 0;
+    background-attachment: fixed
+    }
+
+    body::before {
+  /* Add a dark, transparent overlay on top of the image */
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark black with 50% opacity */
+  z-index: -1; /* Ensure the overlay is below text but above the image */
+  filter: blur(8px); /* Apply blur to the background image */
+}
+
+.signup{
+    margin-left: 21rem;
+    margin-bottom: 3rem;
+    color: antiquewhite;
+}
+
+  
+  
+  .btn-grayish:hover {
+    background-color: #5a6268; /* Slightly darker gray on hover */
+  }
+</style>
+<div class="row mt-3">
+    <h1 class="signup">Sign Up</h1>
+    <div class="col-6 offset-3">
+        <form action="/signup" method="POST" class="needs-validation" novalidate> 
+        <div class="mb-3">
+            <label for="username" class="form-label" style="color:antiquewhite">Username</label>
+            <input name="username" id="username" type="text" class="form-control" required/>
+            <div class="invalid-feedback">Enter username</div>
+        </div>
+        <div class="mb-3">
+            <label for="contactNumber" class="form-label" style="color:antiquewhite">Contact Number</label>
+            <input name="contactNumber" id="contactNumber" type="number" class="form-control" required/>
+            <div class="invalid-feedback">Enter contact number</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label" style="color:antiquewhite">Password</label>
+            <input name="password" id="password" type="text" class="form-control" required/>
+            <div class="invalid-feedback">Enter password</div>
+        </div>
+        <button class="btn btn-secondary" style="color: black;">Sign Up</button>
+
+    </form>
+    </div>
+    </div>

@@ -1,0 +1,184 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-image: url('/images/background.jpeg');  /* Set your image here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(19, 14, 14);
+    height: 100vh;  /* Ensure it covers the entire height of the viewport */
+    margin: 0;
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark black with 70% opacity */
+    z-index: -1; /* Ensure the overlay is below text but above the image */
+    filter: blur(8px); /* Apply blur to the background image */
+  }
+
+  .content-section {
+    margin-top: 1.5rem;
+    color: antiquewhite;
+  }
+
+  .show-img {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    display: block;
+    border-radius: 15px;
+    margin: 0 auto  1rem ;
+    margin-bottom: 2.5rem !important;
+
+  }
+
+  .details p {
+    margin: 0.5rem 0;
+    font-size: 23px;
+  }
+
+  .title {
+    color: antiquewhite;
+    margin-bottom: 3rem;
+    font: bold;
+  }
+
+  .reviewtext{
+    color: antiquewhite;
+  }
+
+  .btn-grayish:hover {
+    background-color: #5a6268; /* Slightly darker gray on hover */
+  }
+  
+  #comment{
+ background-color: grey;
+ opacity: 0.8;
+  }
+
+  .showReview{
+    font-size: 20px
+  }
+
+  .custom-img {
+    height: 500px; /* Fixed height */
+    object-fit: cover; /* Ensure the image covers the space */
+    width: 100%; /* Make sure it spans the full width of the carousel */
+  }
+</style>
+
+<script>
+  const mapToken = "<%= process.env.MAP_TOKEN %>";
+  const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+</script>
+
+<div class="row mt-3 content-section">
+  <div class="col-8 offset-3">
+    <h1 class="title"><%= listing.numBHK %> BHK <%= listing.propertyType %></h1>
+    <!-- Bootstrap Carousel -->
+    <div id="carouselImages" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% listing.images.forEach((image, index) => { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <img src="<%= image.url %>" class="d-block w-100 custom-img" alt="Image">
+          </div>
+        <% }); %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- End of Bootstrap Carousel -->
+    <div class="details">
+      
+      <p><%= listing.description %></p>
+      <p>&#8377;<%= listing.price.toLocaleString("en-IN") %>/- month</p>
+      <p><%= listing.location %></p>
+      <p ><%= listing.country %></p>
+      <p><b>Property Owner - <%= listing.owner ? listing.owner.username : 'Unknown Owner' %></b></p>
+      <p><b>Contact Number - <%= listing.owner && listing.owner.contactNumber ? listing.owner.contactNumber : 'XXXXXXXXXX' %></b></p>
+
+    </div>
+  </div>
+</div>
+
+<% if (currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
+  <div class="btns mt-3">
+    <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark   offset-3 edit-btn">Edit</a>
+    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE" class="d-inline">
+      <button class="btn btn-dark ">Delete</button>
+    </form>
+  </div>
+<% } %>
+
+<!-- Review Section -->
+<div class="col-8 offset-3 mb-3">
+  <% if (currUser) { %>
+    <hr style="color:white"/>
+    <h4 class="reviewtext">Leave a Review</h4>
+    <form action="/listings/<%=listing._id%>/reviews" method="POST" novalidate class="needs-validation">
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label reviewtext">Rating</label>
+        <fieldset class="starability-slot">
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label reviewtext">Comments</label>
+        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+        <div class="invalid-feedback">Please add comments!</div>
+      </div>
+      <button class="btn btn-secondary" style="color: black;">Submit</button>
+    </form>
+    <hr />
+  <% } %>
+  <hr style="color:white;"/>
+  <% if (listing.reviews.length > 0) { %>
+    <div class="row">
+      <p class="reviewtext"><b>All Reviews</b></p>
+      <% for (review of listing.reviews) { %>
+        <div class="card col-5 ms-3 mb-3" style="background-color: grey; opacity: 0.8">
+          <div class="card-body">
+            <b><p class="card-title showReview">@<%= review.author.username %></p></b>
+            <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+            <p class="card-text showReview"><%= review.comment %></p>
+          </div>
+          <form class="mb-3 mt-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+            <button class="btn btn-sm btn-dark">Delete</button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+<!-- Map Section -->
+<div class="col-6 offset-3 mb-3">
+  <h3 style="color:antiquewhite">Where you'll be</h3>
+  <div id="map"></div>
+</div>
+
+<script src="/js/map.js"></script>
